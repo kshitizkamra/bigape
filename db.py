@@ -3,7 +3,7 @@ import pandas as pd
 from sqlalchemy import create_engine,text
 
 MYSQL_USER = st.secrets["mysql"]["user"]
-MYSQL_PASSWORD = st.secrets["mysql"]["password"]
+MYSQL_PASSWORD = quote(st.secrets["mysql"]["password"])  # encode special characters
 MYSQL_HOST = st.secrets["mysql"]["host"]
 MYSQL_PORT = st.secrets["mysql"]["port"]
 MYSQL_DB = st.secrets["mysql"]["database"]
