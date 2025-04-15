@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from sqlalchemy import create_engine,text
+from urllib.parse import quote
 
 MYSQL_USER = st.secrets["mysql"]["user"]
 MYSQL_PASSWORD = quote(st.secrets["mysql"]["password"])  # encode special characters
