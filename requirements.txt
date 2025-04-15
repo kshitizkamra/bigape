@@ -10,4 +10,3 @@ matplotlib
 st-gsheets-connection
 streamlit_extras
 pymysql
-urllib
