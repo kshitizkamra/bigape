@@ -1,0 +1,11 @@
+streamlit>=1.28
+pandas
+numpy
+sqlalchemy
+altair
+plotly
+datetime
+psycopg2-binary
+matplotlib
+st-gsheets-connection
+streamlit_extras
