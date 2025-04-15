@@ -2,9 +2,13 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import create_engine,text
 
-secrets = st.secrets["mysql"]
-DB_URL = f"mysql+pymysql://{secrets['user']}:{secrets['password']}@{secrets['host']}:{secrets['port']}/{secrets['database']}"
+MYSQL_USER = st.secrets["mysql"]["user"]
+MYSQL_PASSWORD = st.secrets["mysql"]["password"]
+MYSQL_HOST = st.secrets["mysql"]["host"]
+MYSQL_PORT = st.secrets["mysql"]["port"]
+MYSQL_DB = st.secrets["mysql"]["database"]
 
+DB_URL = f"mysql+pymysql://{MYSQL_USER}:{MYSQL_PASSWORD}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}"
 # Connect to MySQL
 conn = st.connection("mysql", type="sql", url=DB_URL)
 
