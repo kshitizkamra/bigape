@@ -2,6 +2,7 @@ from navigation import make_sidebar
 import streamlit as st
 import pandas as pd
 import datetime
+st.cache_data.clear()
 from db import db_data, db_sales_data, db_sales_data_for_side_filter, db_latlong, get_sidebar_data
 
 if not st.session_state.get("logged_in", False):
