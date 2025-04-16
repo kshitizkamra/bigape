@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from streamlit_extras.stylable_container import stylable_container
 from annotated_text import annotated_text
+st.cache_data.clear()
 from db import db_data, db_sales_data, db_sales_data_for_side_filter, db_latlong, get_sidebar_data, get_actions_data, insert_df_to_db
 
 if not st.session_state.get("logged_in", False):
