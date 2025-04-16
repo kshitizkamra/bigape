@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from streamlit_extras.stylable_container import stylable_container
 from annotated_text import annotated_text
+st.cache_data.clear()
 from db import db_data, db_sales_data, db_sales_data_for_side_filter, db_latlong, get_sidebar_data, get_actions_data
 
 if not st.session_state.get("logged_in", False):
@@ -23,7 +24,10 @@ make_sidebar()
 
 # Get sidebar data from db.py (MySQL)
 db_channel, db_seller, db_gender, db_brands, db_article_type = get_sidebar_data()
+st.write("")
+st.write("")
 
+# db_sales_data
 # Read and process data from db.py (MySQL)
 db_data['order_created_date'] = pd.to_datetime(db_data['order_created_date'], dayfirst=True, format='mixed')
 db_sales_data['order_created_date'] = pd.to_datetime(db_sales_data['order_created_date'], dayfirst=True, format='mixed')
@@ -88,6 +92,11 @@ font-size:14px !important;
 	}
                 </style>
     """, unsafe_allow_html=True)
+
+# st.write(db_sales_data_for_side_filter['order_created_date'].min())
+# st.toast("✅ Action saved to database!", icon="🎯")
+# db_sales_data_for_side_filter['order_created_date'].max()
+# db_sales_data_for_side_filter
 
 with st.sidebar:
     st.title('Filters')
