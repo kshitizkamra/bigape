@@ -92,15 +92,15 @@ with st.container(border=True) :
         db_master=db_master.drop_duplicates()
         
         final_bar.progress(1/4,text="Merging the Data")
-        db_sales
+        # db_sales
         db_data=db_sales.merge(db_settlement,left_on=['order_release_id'],right_on=['order_release_id'])
         
-        db_data
+        # db_data
         db_data=db_data.merge(db_master,left_on=['sku_code'],right_on=['channel_product_id'])
-        db_data
+        # db_data
         db_data['seller_id']=db_data['seller_id'].astype(str)
         db_data.drop(['sku_code_x','channel_x','channel_y','channel_product_id','sku_code_y','channel_style_id'],axis=1,inplace=True)
-        db_data
+        # db_data
         db_sales_final=db_sales.merge(db_master,left_on=['sku_code'],right_on=['channel_product_id'])
         db_sales_final['seller_id']=db_sales_final['seller_id'].astype(str)
         final_bar.progress(2/4,text="Final Magic ")
