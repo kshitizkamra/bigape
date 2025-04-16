@@ -247,8 +247,11 @@ with st.container(border=True) :
     subcol1,subcol2,subcol3=st.columns([2,3,2],gap="small")
     with subcol2 :
         if st.button('Upload',key="master_btn"):
-            master_bar = st.progress(0, text="Uploading")
             st.cache_data.clear()
+            from db import db_data, db_sales_data, db_sales_data_for_side_filter, db_latlong, db_settlement,db_sales,get_sidebar_data, get_actions_data, insert_df_to_db,insert_df_to_db_masters,clear_table_data
+
+            master_bar = st.progress(0, text="Uploading")
+            # st.cache_data.clear()
             total_master_files=len(uploaded_master)
             y=0
             
