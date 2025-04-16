@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import datetime
-
+st.cache_data.clear()
 from db import db_data, db_sales_data, db_sales_data_for_side_filter, db_latlong, get_sidebar_data, get_actions_data
 
 if not st.session_state.get("logged_in", False):
