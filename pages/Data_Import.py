@@ -16,7 +16,7 @@ import time
 import math
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
-
+st.cache_data.clear()
 from db import db_data, db_sales_data, db_sales_data_for_side_filter, db_latlong, db_settlement,db_sales,get_sidebar_data, get_actions_data, insert_df_to_db,insert_df_to_db_masters,clear_table_data
 
 
@@ -88,8 +88,11 @@ with st.container(border=True) :
     subcol1,subcol2,subcol3=st.columns([2,3,2],gap="small")
     with subcol2 :
         if st.button('Upload',key="settlement_btn"):
-            settlement_bar = st.progress(0, text="Uploading")
             st.cache_data.clear()
+            from db import db_data, db_sales_data, db_sales_data_for_side_filter, db_latlong, db_settlement,db_sales,get_sidebar_data, get_actions_data, insert_df_to_db,insert_df_to_db_masters,clear_table_data
+
+            settlement_bar = st.progress(0, text="Uploading")
+            
             total_settlement_files=len(uploaded_settlement)
             x=0
             
@@ -107,6 +110,7 @@ with st.container(border=True) :
                     df1.rename(columns = {'commission':'platform_fees','tds':'tds_amount','total_logistics_deduction':'shipping_fee','logistics_commission':'total_logistics','settled_amount':'total_actual_settlement'}, inplace = True)
                     df1=df1.drop(['igst_tcs','cgst_tcs','sgst_tcs'],axis=1) 
                     df1['channel']="Myntra"
+                    df1['id']=1
                    except:
                         try:
                             df1= df[['order_release_id','customer_paid_amt','platform_fees','tcs_amount','tds_amount',  'shipping_fee','pick_and_pack_fee','fixed_fee','payment_gateway_fee','total_tax_on_logistics','total_actual_settlement','settlement_date_prepaid_payment','settlement_date_postpaid_comm_deduction','shipment_zone_classification']].copy()
@@ -119,11 +123,11 @@ with st.container(border=True) :
                             df1.loc[df1['total_actual_settlement']<0,'order_type']='Reverse'
                             df1=df1.drop(['settlement_date_prepaid_payment','settlement_date_postpaid_comm_deduction'],axis=1)
                             df1['channel']="Myntra"
+                            df1['id']=1
                         except:
-                            # st.write(str(filename.name)+" not uploaded, wrong format")
-                            st.toast(str(filename.name)+" not uploaded, wrong format")
+                            st.write(str(filename.name)+" not uploaded, wrong format")
                       
-                db_settlement_upload = pd.concat([db_settlement, df1], ignore_index=True, sort=False)
+                db_settlement_upload = pd.concat([db_settlement_upload, df1], ignore_index=True, sort=False)
             
             # db_settlement=pd.concat([db_settlement,db_settlement_data],ignore_index=True,sort=False)  
               
@@ -141,7 +145,7 @@ with st.container(border=True) :
             db_settlement_final.drop_duplicates(inplace=True)
             db_settlement_final.drop(['index','sequence'],axis=1,inplace=True)
             db_settlement_all=pd.concat([db_settlement_final,db_settlement],ignore_index=True,sort=False)
-            db_settlement_all.drop_duplicates(subset=['order_release_id','order_type'],inplace=True)
+            db_settlement_all.drop_duplicates(subset=['order_release_id','order_type'],inplace=True,keep='first')
 
 
 
@@ -176,8 +180,11 @@ with st.container(border=True) :
     subcol1,subcol2,subcol3=st.columns([2,3,2],gap="small")
     with subcol2 :
         if st.button('Upload',key="sales_btn"):
-            sales_bar = st.progress(0, text="Uploading")
             st.cache_data.clear()
+            from db import db_data, db_sales_data, db_sales_data_for_side_filter, db_latlong, db_settlement,db_sales,get_sidebar_data, get_actions_data, insert_df_to_db,insert_df_to_db_masters,clear_table_data
+
+            sales_bar = st.progress(0, text="Uploading")
+            # st.cache_data.clear()
             total_sales_files=len(uploaded_sales)
             y=0
             
@@ -203,7 +210,7 @@ with st.container(border=True) :
                         st.write(" not uploaded, wrong format")
                         st.write("")
                       
-                   db_sales_upload = pd.concat([df1, db_sales], ignore_index=True, sort=False)
+                   db_sales_upload = pd.concat([db_sales_upload, df1], ignore_index=True, sort=False)
             
             db_sales_all=pd.concat([db_sales_upload,db_sales],ignore_index=True,sort=False)  
             db_sales_all=db_sales_all.drop_duplicates(subset="order_release_id",keep='first')
