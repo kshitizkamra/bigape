@@ -120,7 +120,8 @@ with st.container(border=True) :
                             df1=df1.drop(['settlement_date_prepaid_payment','settlement_date_postpaid_comm_deduction'],axis=1)
                             df1['channel']="Myntra"
                         except:
-                            st.write(str(filename.name)+" not uploaded, wrong format")
+                            # st.write(str(filename.name)+" not uploaded, wrong format")
+                            st.toast(str(filename.name)+" not uploaded, wrong format")
                       
                 db_settlement_upload = pd.concat([db_settlement, df1], ignore_index=True, sort=False)
             
